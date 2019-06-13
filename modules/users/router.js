@@ -15,12 +15,23 @@ apiRouter.get('/users', async ctx => {
 });
 
 apiRouter.post('/users', async ctx => {
-    ctx.type = 'json';
     const user = new User(ctx.request.body);
 
     await user.save();
 
     ctx.redirect('/');
+});
+
+apiRouter.post('/messages', async ctx => {
+    const { email, password } = ctx.request.body;
+
+    const user = await User.findOne({ email: String(email) });
+
+    if (!user) {
+        return ctx.throw(400, 'пользователь не найден');
+    }
+
+    ctx.body = ctx.request.body;
 });
 
 module.exports = [
