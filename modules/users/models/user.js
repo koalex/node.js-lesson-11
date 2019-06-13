@@ -55,6 +55,12 @@ userSchema.virtual('password')
     .get(function () { return this._password; });
 
 
+userSchema.methods.checkPassword = function (password) {
+    if (!password || !this.password_hash) return false;
+
+    return String(crypto.pbkdf2Sync(password, this.salt, 12000, 128, 'sha512')) === this.password_hash;
+};
+
 userSchema.methods.toJSON = function (opts) {
     const data = this.toObject(opts);
 
