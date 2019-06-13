@@ -10,7 +10,8 @@ const server = http.createServer(app.callback());
 
 /* MIDDLEWARES */
 [
-    'static.js'
+    'static.js',
+    'bodyparser.js'
 ]
 .map(mw => path.join(__dirname, 'middlewares', mw))
 .forEach(mw => {
