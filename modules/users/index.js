@@ -1,5 +1,7 @@
+const router = require('./router');
+
 module.exports = function (app) {
-    app.use(async (ctx, next) => {
-        ctx.body = 'USERS';
+    router.forEach(router => {
+        app.use(router.routes());
     });
 };
